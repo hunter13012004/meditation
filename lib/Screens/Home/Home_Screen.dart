@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:trial/Screens/OnBoardingPage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:trial/Screens/onboarding/OnBoardingPage.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
@@ -21,21 +23,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+      ),
       body: SafeArea(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height.h,
           child: Center(
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Welcome , ${widget.user}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 24),
+                        style: GoogleFonts.inter(
+                            textStyle: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 20.sp)),
                       ),
                       IconButton(
                           onPressed: () async {
@@ -49,8 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.center,
                   child: Image.asset(
                     'assets/images/Group.png',
-                    height: 118,
-                    width: 122,
+                    height: 118.h,
+                    width: 122.w,
                   ),
                 ),
                 Column(

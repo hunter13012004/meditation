@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trial/Screens/Home/Home_Screen.dart';
-import 'package:trial/Screens/OnBoardingPage.dart';
+import 'package:trial/Screens/onboarding/OnBoardingPage.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});

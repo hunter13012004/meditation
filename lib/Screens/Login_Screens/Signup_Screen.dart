@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trial/Components/Custom_Button.dart';
 import 'package:trial/Components/Custom_texfeild.dart';
@@ -33,7 +35,8 @@ class _SignupScreenState extends State<SignupScreen> {
           context,
           MaterialPageRoute(
               builder: (context) => HomeScreen(
-                    user: FirebaseAuth.instance.currentUser?.email,
+                    user:
+                        FirebaseAuth.instance.currentUser?.email?.split("@")[0],
                   )));
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -56,7 +59,8 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   static GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+  bool isgooglelogin = false;
+  bool isloading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,48 +76,61 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Form(
                 key: _formkey,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Stack(
                       children: [
                         Image.asset(
                           'assets/images/Logo.png',
-                          height: 249,
-                          width: 257,
+                          height: 249.h,
+                          width: 257.w,
                         ),
                         Positioned(
                             child: Image.asset(
                           'assets/images/star.png',
-                          height: 69,
-                          width: 69,
+                          height: 69.h,
+                          width: 69.w,
                         )),
                         Positioned(
                             right: 0,
                             child: Image.asset(
                               'assets/images/star.png',
-                              height: 69,
-                              width: 69,
+                              height: 69.h,
+                              width: 69.w,
                             )),
                         Positioned(
                             bottom: 0,
                             left: 80,
                             child: Text(
                               'Sign Up',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 32),
+                              style: GoogleFonts.inter(
+                                  textStyle: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 32.sp)),
                             ))
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 20.h,
                     ),
-                    GoogleButton(
-                      text: 'Google Sign Up',
-                      ontap: () async {
-                        await LoginWithGoogle();
-                      },
-                    ),
+                    isloading == false
+                        ? isgooglelogin == false
+                            ? GoogleButton(
+                                text: 'Google Sign Up',
+                                ontap: () async {
+                                  setState(() {
+                                    isgooglelogin = true;
+                                  });
+                                  await LoginWithGoogle();
+                                },
+                              )
+                            : Center(
+                                child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ))
+                        : Container(),
                     SizedBox(
-                      height: 30,
+                      height: 30.h,
                     ),
                     Row(
                       children: [
@@ -123,23 +140,25 @@ class _SignupScreenState extends State<SignupScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 30.h,
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
                       child: Column(
                         children: [
                           Row(
                             children: [
                               Text(
                                 'Email-ID',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 16),
+                                style: GoogleFonts.inter(
+                                    textStyle: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16.sp)),
                               )
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 10.h,
                           ),
                           CustomTexfeild(
                             validator: (value) {
@@ -156,19 +175,21 @@ class _SignupScreenState extends State<SignupScreen> {
                             hinttext: 'Enter your email',
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 20.h,
                           ),
                           Row(
                             children: [
                               Text(
                                 'Password',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700, fontSize: 16),
+                                style: GoogleFonts.inter(
+                                    textStyle: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16.sp)),
                               )
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 10.h,
                           ),
                           CustomTexfeild(
                             icon: obscuretext == true
@@ -193,41 +214,59 @@ class _SignupScreenState extends State<SignupScreen> {
                             },
                           ),
                           SizedBox(
-                            height: 40,
+                            height: 40.h,
                           ),
-                          CustomButton(
-                              text: 'Sign Up',
-                              ontap: () async {
-                                if (_formkey.currentState!.validate()) {
-                                  await SignUpWithEmailAndPassword();
-                                }
-                              }),
+                          isgooglelogin == false
+                              ? isloading == false
+                                  ? CustomButton(
+                                      text: 'Sign Up',
+                                      ontap: () async {
+                                        if (_formkey.currentState!.validate()) {
+                                          setState(() {
+                                            isloading = true;
+                                          });
+                                          await SignUpWithEmailAndPassword();
+                                        }
+                                      })
+                                  : Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.black,
+                                      ),
+                                    )
+                              : Container(),
                           SizedBox(
-                            height: 20,
+                            height: 20.h,
                           ),
-                          RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                                text: 'Already a member? ',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14,
-                                    color: Colors.black)),
-                            TextSpan(
-                                text: 'Log in',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14,
-                                    color: Color(0xffD1B18E)),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginScreen()));
-                                  }),
-                          ]))
+                          isgooglelogin == false
+                              ? isloading == false
+                                  ? RichText(
+                                      text: TextSpan(children: [
+                                      TextSpan(
+                                          text: 'Already a member? ',
+                                          style: GoogleFonts.inter(
+                                              textStyle: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14.sp,
+                                                  color: Colors.black))),
+                                      TextSpan(
+                                          text: 'Log in',
+                                          style: GoogleFonts.inter(
+                                            textStyle: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 14.sp,
+                                                color: Color(0xffD1B18E)),
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          LoginScreen()));
+                                            }),
+                                    ]))
+                                  : Container()
+                              : Container()
                         ],
                       ),
                     )

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTexfeild extends StatefulWidget {
   final String? Function(String?)? validator;
@@ -34,10 +36,8 @@ class _CustomTexfeildState extends State<CustomTexfeild> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 49,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width.w,
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextFormField(
@@ -47,18 +47,22 @@ class _CustomTexfeildState extends State<CustomTexfeild> {
         obscureText: widget.obscuretext,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
+          isDense: true,
           focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide.none),
           errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
           focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
           enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(color: Colors.white),
           ),
-          hintStyle: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 14,
-            color: Color(0xffB3B3B3),
+          hintStyle: GoogleFonts.inter(
+            textStyle: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14.sp,
+                color: Color(0xffB3B3B3)),
           ),
           hintText: widget.hinttext,
           suffixIcon:
