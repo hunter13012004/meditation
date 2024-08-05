@@ -23,11 +23,11 @@ class CustomTexfeild extends StatefulWidget {
 }
 
 class _CustomTexfeildState extends State<CustomTexfeild> {
-  final FocusNode focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
-    focusNode.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -41,7 +41,7 @@ class _CustomTexfeildState extends State<CustomTexfeild> {
         borderRadius: BorderRadius.circular(8),
       ),
       child: TextFormField(
-        focusNode: focusNode,
+        focusNode: _focusNode,
         validator: widget.validator,
         controller: widget.controller,
         obscureText: widget.obscuretext,

@@ -50,202 +50,207 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool obscuretext = true;
+  final formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final formkey = GlobalKey<FormState>();
     return Scaffold(
         body: Form(
       key: formkey,
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      Image.asset(
-                        'assets/images/Logo.png',
-                        height: 249,
-                        width: 257,
-                      ),
-                      Positioned(
-                          child: Image.asset(
-                        'assets/images/star.png',
-                        height: 69,
-                        width: 69,
-                      )),
-                      Positioned(
-                          right: 0,
-                          child: Image.asset(
-                            'assets/images/star.png',
-                            height: 69,
-                            width: 69,
-                          )),
-                      Positioned(
-                          bottom: 0,
-                          left: 70,
-                          child: Text(
-                            'Log In',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 32),
-                          ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  GoogleButton(
-                    text: 'Google Log In',
-                    ontap: () async {
-                      await LoginWithGoogle();
-                    },
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(child: Divider()),
-                      Text('or'),
-                      Expanded(child: Divider())
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    child: Column(
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Center(
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Email-ID',
+                        Image.asset(
+                          'assets/images/Logo.png',
+                          height: 249,
+                          width: 257,
+                        ),
+                        Positioned(
+                            child: Image.asset(
+                          'assets/images/star.png',
+                          height: 69,
+                          width: 69,
+                        )),
+                        Positioned(
+                            right: 0,
+                            child: Image.asset(
+                              'assets/images/star.png',
+                              height: 69,
+                              width: 69,
+                            )),
+                        Positioned(
+                            bottom: 0,
+                            left: 80,
+                            child: Text(
+                              'Log In',
                               style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 16),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomTexfeild(
-                          validator: (value) {
-                            if (value == '') {
-                              return 'Email cannot be empty';
-                            } else if (!value!.contains("@gmail.com")) {
-                              return 'Email is invalid';
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller: emailcontroller,
-                          obscuretext: false,
-                          hinttext: 'Enter your email',
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Password',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomTexfeild(
-                          icon: obscuretext == true
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          onPressed: () {
-                            setState(() {
-                              obscuretext = !obscuretext;
-                            });
-                          },
-                          validator: (value) {
-                            if (value == '') {
-                              return 'password cannot be empty';
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller: passwordcontroller,
-                          obscuretext: obscuretext,
-                          hinttext: 'Enter your password',
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            RichText(
-                                text: TextSpan(
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ForgotPasswordScreen()));
-                                      },
-                                    text: 'Forgot password',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: Color(0xffD1B18E)))),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        CustomButton(
-                            text: 'Log In',
-                            ontap: () async {
-                              if (formkey.currentState!.validate()) {
-                                await LoginUserWithEmailAndPassword();
-                              } else {
-                                throw Exception('There is some error');
-                              }
-                            }),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: 'Not a member? ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14,
-                                  color: Colors.black)),
-                          TextSpan(
-                              text: 'Sign Up',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14,
-                                  color: Color(0xffD1B18E)),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SignupScreen()));
-                                }),
-                        ]))
+                                  fontWeight: FontWeight.w600, fontSize: 32),
+                            ))
                       ],
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                    GoogleButton(
+                      text: 'Google Log In',
+                      ontap: () async {
+                        await LoginWithGoogle();
+                      },
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(child: Divider()),
+                        Text('or'),
+                        Expanded(child: Divider())
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Email-ID',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 16),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTexfeild(
+                            validator: (value) {
+                              if (value == '') {
+                                return 'Email cannot be empty';
+                              } else if (!value!.contains("@gmail.com")) {
+                                return 'Email is invalid';
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: emailcontroller,
+                            obscuretext: false,
+                            hinttext: 'Enter your email',
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Password',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomTexfeild(
+                            icon: obscuretext == true
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            onPressed: () {
+                              setState(() {
+                                obscuretext = !obscuretext;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == '') {
+                                return 'password cannot be empty';
+                              } else {
+                                return null;
+                              }
+                            },
+                            controller: passwordcontroller,
+                            obscuretext: obscuretext,
+                            hinttext: 'Enter your password',
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              RichText(
+                                  text: TextSpan(
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ForgotPasswordScreen()));
+                                        },
+                                      text: 'Forgot password',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Color(0xffD1B18E)))),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          CustomButton(
+                              text: 'Log In',
+                              ontap: () async {
+                                if (formkey.currentState!.validate()) {
+                                  await LoginUserWithEmailAndPassword();
+                                } else {
+                                  throw Exception('There is some error');
+                                }
+                              }),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                                text: 'Not a member? ',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                    color: Colors.black)),
+                            TextSpan(
+                                text: 'Sign Up',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                    color: Color(0xffD1B18E)),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignupScreen()));
+                                  }),
+                          ]))
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
