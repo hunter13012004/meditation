@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:trial/Screens/Splash/Splash_screen.dart';
+import 'package:trial/Screens/profile/profile_screen.dart';
 import 'package:trial/firebase_options.dart';
 
 void main() async {

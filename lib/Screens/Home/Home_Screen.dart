@@ -29,20 +29,84 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           height: MediaQuery.of(context).size.height.h,
           child: Center(
-            child: Stack(
+            child: Column(
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Expanded(
+                        child: Text(
+                          'Welcome, ${widget.user}',
+                          style: GoogleFonts.inter(
+                              textStyle: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20.sp)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        alignment: Alignment.center, // Center content
+                        children: [
+                          Image.asset(
+                            'assets/images/bgg.png',
+                            width: 330.w,
+                            height: 201.h,
+                            fit: BoxFit
+                                .cover, // Adjusts image to fill the container
+                          ),
+                          Positioned(
+                            bottom: 80.h, // Adjust position if needed
+                            child: Text(
+                              '7 Days Of Mindfulness',
+                              maxLines: 2,
+                              softWrap: true,
+                              textAlign:
+                                  TextAlign.center, // Center text horizontally
+                              style: GoogleFonts.inter(
+                                  textStyle: TextStyle(
+                                      fontSize: 24.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff9A7762))),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Text(
-                        'Welcome , ${widget.user}',
+                        'Start Your Day',
                         style: GoogleFonts.inter(
                             textStyle: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 20.sp)),
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff9A7762))),
+                      ),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Text(
+                        'Embrace the present moment with awareness and acceptance',
+                        style: GoogleFonts.inter(
+                            textStyle: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff9A7762))),
                       ),
                       IconButton(
                           onPressed: () async {
@@ -51,17 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Icon(Icons.login))
                     ],
                   ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/images/Group.png',
-                    height: 118.h,
-                    width: 122.w,
-                  ),
-                ),
-                Column(
-                  children: [],
                 ),
               ],
             ),

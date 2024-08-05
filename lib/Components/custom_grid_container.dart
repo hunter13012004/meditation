@@ -4,16 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class CustomGridContainer extends StatelessWidget {
-  void Function() onChanged;
+  void Function(dynamic) onChanged;
   final String? value;
-  String? groupvalue;
+  final String? groupvalue;
   final String text;
+  final String image;
   CustomGridContainer(
       {super.key,
       required this.value,
       required this.text,
       required this.groupvalue,
-      required this.onChanged});
+      required this.onChanged,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -26,34 +28,26 @@ class CustomGridContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 color: Colors.red,
                 image: DecorationImage(
-                    image: AssetImage('assets/images/bg.png'),
-                    fit: BoxFit.cover)),
+                    image: AssetImage(image), fit: BoxFit.cover)),
             child: Column(
               children: [
                 Align(
                     alignment: Alignment.topLeft,
                     child: Radio(
-                      activeColor: Colors.black,
-                      value: value,
-                      groupValue: groupvalue,
-                      onChanged: (value) {},
-                    )),
-                Align(
-                  alignment: Alignment.center,
-                  child: Center(
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          maxLines: 2,
-                          text,
-                          style: GoogleFonts.inter(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff9A7762)),
-                        ),
-                      ),
+                        activeColor: Colors.black,
+                        value: value,
+                        groupValue: groupvalue,
+                        onChanged: onChanged)),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      maxLines: 2,
+                      text,
+                      style: GoogleFonts.inter(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff9A7762)),
                     ),
                   ),
                 )

@@ -98,6 +98,7 @@ class _GoalPage3State extends State<GoalPage3> {
                       crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return CustomRewardContainer(
+                      ontap: () {},
                       text: rewards[index]['title'],
                       image: rewards[index]['image'],
                     );
